@@ -4,3 +4,6 @@
 ## 2025-03-05 - Lazy Loading Heavy UI Tabs
 **Learning:** Statically importing heavily conditionally rendered UI tabs (like SummaryDebugger and SavedSummariesBrowser) inflates the initial bundle size and negatively impacts TTI (Time to Interactive). Since they are large, the main chunk size exceeded Vite's warning threshold.
 **Action:** Always consider using `React.lazy()` and `Suspense` for large route components or conditionally rendered tabs that are not needed on initial load. This simple optimization saved ~260KB in the main chunk.
+## 2026-07-02 - O(n²) loop optimization for hierarchy traversals
+**Learning:** During folder index generation, filtering child directories inside a loop over all directories causes an O(n²) bottleneck. In large nested Drive structures, this nested iteration severely degrades performance.
+**Action:** Pre-calculate child directories using a Map grouped by parent ID before iterating. This converts the O(n²) nested search into an O(n) iteration with O(1) lookups.
